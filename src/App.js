@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import DisplayData from './DisplayData.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  onGetData = () => {
+    this.setState({
+      pages: this.state.pages
+    });
+  }
+
+  onTodoChange(value) {
+    this.setState({
+      pages: value
+    });
+  }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pages: '1',
+    };
+  }
+
+  render() {
+   return (
+     <div>
+       <input  onChange={e => this.onTodoChange(e.target.value)} type="text" value={this.state.pages}></input>
+       <button onClick={this.onGetData} >Pobierz</button>
+       <DisplayData message={this.state.pages} />
+       </div>
+    );
+  }
 }
 
 export default App;
