@@ -2,7 +2,7 @@ import React, {
     Component
 } from 'react';
 
-const API = 'https://jsonplaceholder.typicode.com/photos?_page={this.sate.message}&_limit=5';
+const API = 'https://jsonplaceholder.typicode.com/photos?';
 
 class DisplayData extends Component {
 
@@ -16,17 +16,32 @@ class DisplayData extends Component {
     }
 
     getData() {
-        fetch(API)
+        console.log(this.state.message);
+        fetch(API + '_page='+this.state.message+'&_limit='+ this.state.message)
           .then(response => response.json())
           .then(data => this.setState({ hits: data }));
       }
 
+      componentWillUpdate(nextProps, nextState) {
+          console.log(nextProps);
+        if (this.state.loaded = false) {
+            this.setState({message: nextState.message});
+            this.getData();
+        }
+      }
+
+      componentDidUpdate(prevProps, prevState) {
+        this.setState({loaded: true});
+      }
+
     render() {
-        console.log(this.props);
-        if(!this.state.loaded){
+        /*console.log(this.props);
+        this.setState({loaded: this.props.refresh});
+        if(this.state.loaded){
+            this.setState({message: this.props.message});
         this.getData();
         this.setState({loaded: true});
-        }
+        }*/
         const { hits } = this.state;
 
         return (
